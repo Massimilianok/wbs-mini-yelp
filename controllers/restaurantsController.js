@@ -2,7 +2,7 @@ const pool = require('../db/client');
 
 const getAll = (req, res) => {
   pool
-    .query('SELECT restaurant_id, name FROM restaurant')
+    .query('SELECT id, name FROM restaurant')
     .then((data) => res.json({ code: 200, message: 'OK', data: data.rows }))
     .catch((err) => res.status(500).json({ code: 500, error: err }));
 };
@@ -10,7 +10,7 @@ const getAll = (req, res) => {
 const getOneRestaurant = (req, res) => {
   const { id } = req.params;
   const getOneRestaurant = {
-    text: 'SELECT restaurant_id, name FROM restaurant WHERE restaurant_id=$1',
+    text: 'SELECT id, name FROM restaurant WHERE id=$1',
     values: [id],
   };
   pool
