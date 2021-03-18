@@ -8,6 +8,8 @@ const helmet = require('helmet');
 
 const indexRouter = require('./routes/index');
 const restaurantRouter = require('./routes/restaurantRoute');
+const cityRouter = require('./routes/cityRoute');
+const tagRouter = require('./routes/tagRoute');
 
 const app = express();
 
@@ -21,5 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/restaurant', restaurantRouter);
+app.use('/api/city', cityRouter);
+app.use('/api/tag', tagRouter);
 
 module.exports = app;
