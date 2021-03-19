@@ -2,7 +2,13 @@ const pool = require('../db/client');
 
 const getAll = (req, res) => {
   pool
-    .query('SELECT id, name FROM restaurant')
+    .query(
+      `
+      SELECT restaurant.id, restaurant_name, description, img_url, city_name
+      FROM restaurant
+      LEFT JOIN city ON restaurant.city_id = city.id
+      `
+    )
     .then((data) => res.json({ code: 200, message: 'OK', data: data.rows }))
     .catch((err) => res.status(500).json({ code: 500, error: err }));
 };
@@ -10,7 +16,12 @@ const getAll = (req, res) => {
 const getOneRestaurant = (req, res) => {
   const { id } = req.params;
   const getOneRestaurant = {
-    text: 'SELECT id, name FROM restaurant WHERE id=$1',
+    text: `
+      SELECT restaurant.id, restaurant_name, description, img_url, city_name
+      FROM restaurant
+      LEFT JOIN city ON restaurant.city_id = city.id 
+      WHERE restaurant.id=$1
+    `,
     values: [id],
   };
   pool
